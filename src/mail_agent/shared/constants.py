@@ -1,0 +1,3 @@
+import os
+
+INTERNAL_EMAIL_ADDRESS = os.environ.get("INTERNAL_EMAIL_ADDRESS")
