@@ -2,15 +2,26 @@ from langgraph.graph import StateGraph, START, END
 
 from src.mail_agent.states.local_actions_substate import LocalActionSubState
 from .models import NodesEnum
-from .nodes import perform_local_action
+from .routing import LocalActionSubgraphRouter
+from .nodes import select_action_execution_capability, execute_terminal_action, execute_browser_action
 
 local_action_subgraph_builder = StateGraph(LocalActionSubState)
 
 # ------ NODES ------
-local_action_subgraph_builder.add_node(NodesEnum.PERFORM_LOCAL_ACTION, perform_local_action)
+local_action_subgraph_builder.add_node(NodesEnum.SELECT_ACTION_EXECUTION_CAPABILITY, select_action_execution_capability)
+
+local_action_subgraph_builder.add_node(NodesEnum.EXECUTE_BROWSER_ACTION, execute_browser_action)
+local_action_subgraph_builder.add_node(NodesEnum.EXECUTE_TERMINAL_ACTION, execute_terminal_action)
+
 
 # ------ EDGES ------
-local_action_subgraph_builder.add_edge(START, NodesEnum.PERFORM_LOCAL_ACTION)
+
+local_action_subgraph_builder.add_edge(START, NodesEnum.SELECT_ACTION_EXECUTION_CAPABILITY)
+
+local_action_subgraph_builder.add_conditional_edges(
+    NodesEnum.SELECT_ACTION_EXECUTION_CAPABILITY,
+    LocalActionSubgraphRouter.after_select_action_execution_capability,
+)
 
 
 

@@ -1,1 +1,4 @@
-from .perform_local_action import perform_local_action
+from .select_action_execution_capability import select_action_execution_capability
+
+from .execute_terminal_action import execute_terminal_action
+from .execute_browser_action import execute_browser_action
