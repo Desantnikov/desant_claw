@@ -40,3 +40,8 @@ class ExecutionPlan(BaseModel):
         updated_execution_plan = self.model_copy(update={"steps": updated_steps})
 
         return updated_execution_plan
+
+
+class LocalActionCapability(BaseModel):
+    capability_name: str
+    capability_description: str | None = None  # TODO: descriptions

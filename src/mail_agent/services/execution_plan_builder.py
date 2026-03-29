@@ -2,12 +2,14 @@ from pydantic_ai import Agent
 
 from src.mail_agent.services.models import ExecutionPlanBuilderOutput
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, EXECUTION_PLAN_BUILDER_INSTRUCTION
-from src.mail_agent.shared.models import EmailData, ExecutionPlan, ExecutionPlanStep
+from src.mail_agent.shared.models import ExecutionPlan, ExecutionPlanStep
+from .models import ExecutionPlanBuilderInput
 
 
 class ExecutionPlanBuilder:
-    def __init__(self, email_data: EmailData):
-        self.email_data = email_data
+    def __init__(self, execution_plan_builder_input: ExecutionPlanBuilderInput):
+        self.input = execution_plan_builder_input
+        self.email_data = self.input.email_data
 
         self.agent = Agent(
             'openai:gpt-5.1',

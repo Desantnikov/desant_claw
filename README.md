@@ -17,8 +17,9 @@ curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
     5.3 request_email_reply_human_approval (adds "reply_approved" to state)
     5.4 send_email (add result to state)
  
- 
- 
+For planning and other one-shot actions pydantic_ai agents are used
+For agent loops langgraph agents are used
+
  ingest_email -> build_execution_plan -> validate_execution_plan
  -> execute_planned_step
  
@@ -69,6 +70,9 @@ src
 - - services
 - - - models.py
 - - - mail_service.py
+- - - execution_plan_builder.py (top-level)
+- - - action_execution_node_selector.py (for action subgraph)
+- - - browser_action_executor.py
 - - - <all_services_files>
 - - states
 - - - top_level_state.py
@@ -88,8 +92,8 @@ src
 - - - - graph_builder.py
 - - - - models.py (with NodesEnum)
 - - - - nodes
-- - - - - classify_required_local_actions.py
-- - - - - <all_remaining_local_action_nodes>
+- - - - - execute_browser_action.py
+- - - - - <all_remaining_action_types>
 - - - reply_subgraph
 - - - - models.py (with NodesEnum)
 - - - - routing.py
