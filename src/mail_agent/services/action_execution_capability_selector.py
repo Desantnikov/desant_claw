@@ -1,6 +1,6 @@
 from pydantic_ai import Agent
 
-from src.mail_agent.services.models import ActionExecutionCapabilitySelectorInput, ActionExecutionCapabilitySelectorOutput
+from src.mail_agent.services.contracts import ActionExecutionCapabilitySelectorInput, ActionExecutionCapabilitySelectorOutput
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, ACTION_EXECUTION_NODE_SELECTOR_INSTRUCTION
 from src.mail_agent.shared.models import ExecutionPlan, ExecutionPlanStep, LocalActionCapability
 from src.mail_agent.shared.exceptions import ServiceException

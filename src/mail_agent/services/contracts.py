@@ -22,7 +22,7 @@ class ExecutionPlanBuilderOutput(BaseModel):
     confidence: float
 
 
-# -------------- ActionExecutionNodeSelector --------------------
+# -------------- ActionExecutionCapabilitySelector --------------------
 
 class ActionExecutionCapabilitySelectorInput(BaseModel):
     execution_plan_step_data: ExecutionPlanStep
@@ -31,11 +31,3 @@ class ActionExecutionCapabilitySelectorInput(BaseModel):
 class ActionExecutionCapabilitySelectorOutput(BaseModel):
     suggested_capability_name: str
     confidence: float
-
-
-# -------------- BrowserActionExecutor --------------------
-
-class BrowserActionExecutorInput(BaseModel):
-    summary: str
-    reason: str
-    action_spec: dict

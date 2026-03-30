@@ -1,5 +1,5 @@
 from src.mail_agent.services.execution_plan_builder import ExecutionPlanBuilder
-from src.mail_agent.services.models import ExecutionPlanBuilderInput
+from src.mail_agent.services.contracts import ExecutionPlanBuilderInput
 from src.mail_agent.states.top_level_state import TopLevelState
 
 

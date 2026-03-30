@@ -1,5 +1,5 @@
 from src.mail_agent.services.action_execution_capability_selector import ActionExecutionCapabilitySelector
-from src.mail_agent.services.models import ActionExecutionCapabilitySelectorInput
+from src.mail_agent.services.contracts import ActionExecutionCapabilitySelectorInput
 from ..models import CAPABILITIES_LIST
 from src.mail_agent.states.local_actions_substate import LocalActionSubState
 

@@ -11,7 +11,7 @@ class ExecutionPlanStep(BaseModel):
     status: ExecutionPlanStepStatusEnum = ExecutionPlanStepStatusEnum.PENDING
 
     type: ExecutionPlanStepTypeEnum
-    step_index: int
+    step_index: int  # TODO: make string
     summary: str
     reason: str
     action_spec: dict
@@ -42,6 +42,15 @@ class ExecutionPlan(BaseModel):
         return updated_execution_plan
 
 
+class Artifact(BaseModel):
+    data: dict
+
+
+class StepResult(BaseModel):
+    artifacts: list[Artifact]
+
+
 class LocalActionCapability(BaseModel):
     capability_name: str
     capability_description: str | None = None  # TODO: descriptions
+

@@ -1,4 +1,4 @@
 from .select_action_execution_capability import select_action_execution_capability
 
-from .execute_terminal_action import execute_terminal_action
+from .execute_bash_action import execute_bash_action
 from .execute_browser_action import execute_browser_action
