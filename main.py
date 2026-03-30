@@ -10,8 +10,12 @@ if __name__ == "__main__":
     #  'snippet': 'найди мой последний markdown-файл, вытащи из него задачи и создай новый summary-файл',
     #  'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
     #  'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
+    # latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
+    #                'snippet': 'Найди в интернете данные об украине, сохрани их в файл, и отправь этот файл мне по почте',
+    #                'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
+    #                'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
     latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
-                   'snippet': 'Найди в интернете данные об украине, сохрани их в файл, и отправь этот файл мне по почте',
+                   'snippet': 'Создай новый файл llm_test.txt на моем компьютере',
                    'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
                    'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
 

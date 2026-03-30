@@ -10,6 +10,8 @@ EXECUTION_PLAN_BUILDER_INSTRUCTION = """
     Take into account possible consequences of the steps.
     Considering step consequences place steps in order which allows all the steps to be executed and the task to be completed.
     Split steps into atomic actions.
+    Do NOT split action spec into substeps. If you need to split them into substeps. Generate a general
+    step overview suitable for passing to another specific LLM agent.
     Return execution plan as JSON.
 """
 
