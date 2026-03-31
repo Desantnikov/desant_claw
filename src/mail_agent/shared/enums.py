@@ -14,7 +14,6 @@ class InputSecurityStatusEnum(str, Enum):
 
 class ExecutionPlanStepTypeEnum(str, Enum):
     PERFORM_LOCAL_ACTION = "perform_local_action"
-    SEND_REPLY_EMAIL = "send_reply_email"
     SEND_EMAIL = "send_email"
     DO_NOTHING = "do_nothing"
 

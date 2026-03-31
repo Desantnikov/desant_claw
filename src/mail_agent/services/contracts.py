@@ -1,8 +1,18 @@
 from pydantic import BaseModel, Field
 
-from src.mail_agent.shared.models import ExecutionPlanStep
+from src.mail_agent.shared.models import ExecutionPlanStep, Artifact
 from src.mail_agent.shared.enums import ExecutionPlanStepTypeEnum
 from src.mail_agent.shared.models import EmailData, LocalActionCapability
+
+
+# -------------- SendEmailService --------------------
+
+class SendEmailServiceInput(BaseModel):
+    context: dict
+
+class SendEmailServiceOutput(BaseModel):
+    status: str
+    artifacts: list[Artifact]
 
 
 # -------------- ExecutionPlanBuilder --------------------
@@ -31,3 +41,5 @@ class ActionExecutionCapabilitySelectorInput(BaseModel):
 class ActionExecutionCapabilitySelectorOutput(BaseModel):
     suggested_capability_name: str
     confidence: float
+
+

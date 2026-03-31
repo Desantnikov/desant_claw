@@ -6,9 +6,9 @@ from src.mail_agent.shared.enums import InputSecurityStatusEnum, SenderTypeEnum
 from src.mail_agent.shared.models import EmailData, ExecutionPlan, StepResult
 
 
-def reduce_step_results_dict(left: dict, right: dict) -> list:
-
-    return right
+def reduce_step_results_dict(left: dict, right: dict) -> dict:
+    # TODO: add keys duplication check
+    return dict(**left, **right)
 
 
 class TopLevelState(BaseModel):
