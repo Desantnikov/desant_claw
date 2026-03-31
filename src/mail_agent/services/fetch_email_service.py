@@ -1,7 +1,7 @@
 from langchain_google_community import GmailToolkit
 
 
-class MailService:
+class FetchEmailService:
     def __init__(self):
         toolkit = GmailToolkit()
         tools = {tool.name: tool for tool in toolkit.get_tools()}
