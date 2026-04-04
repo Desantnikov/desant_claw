@@ -1,3 +1,5 @@
+from langgraph.types import Command
+
 from src.mail_agent.shared.enums import ExecutionPlanStepTypeEnum
 from src.mail_agent.shared.models import StepResult
 from src.mail_agent.states.top_level_state import TopLevelState
@@ -5,10 +7,10 @@ from src.mail_agent.graph.local_action_subgraph import local_action_subgraph
 from src.mail_agent.graph.reply_subgraph import reply_subgraph
 
 
-def dispatch_execution_plan_step(state: TopLevelState):
+async def dispatch_execution_plan_step(state: TopLevelState):
     """
     # dispatch instead of simple routing because here I want to resolve outputs from previous steps
-    # TODO: resolve previous node output to state
+    # TODO: call subgraphs as a nodes via Command()
     """
     next_step = state.execution_plan.get_next_pending_step()
 
@@ -21,20 +23,22 @@ def dispatch_execution_plan_step(state: TopLevelState):
     step_results = []
     # execute local action
     if next_step.type == ExecutionPlanStepTypeEnum.PERFORM_LOCAL_ACTION:
-        local_action_subgraph_state = local_action_subgraph.invoke(
+        local_action_subgraph_state = await local_action_subgraph.ainvoke(
             {
                 "execution_plan_step_data": next_step,
                 "artifacts": artifacts,
-            }
+            },
         )
+
         step_results = StepResult(artifacts=local_action_subgraph_state['artifacts'])
 
     elif next_step.type == ExecutionPlanStepTypeEnum.SEND_EMAIL:
-        reply_subgraph_state = reply_subgraph.invoke(
+        reply_subgraph_state = await reply_subgraph.ainvoke(
             {
                 "context": state.model_dump(),
             }
         )
+
         step_results = StepResult(artifacts=[])
 
     updated_execution_plan = state.execution_plan.mark_step_completed(next_step.step_index)

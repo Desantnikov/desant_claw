@@ -2,8 +2,9 @@ from pydantic_ai import Agent
 
 from src.mail_agent.services.contracts import ActionExecutionCapabilitySelectorInput, ActionExecutionCapabilitySelectorOutput
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, ACTION_EXECUTION_NODE_SELECTOR_INSTRUCTION
-from src.mail_agent.shared.models import ExecutionPlan, ExecutionPlanStep, LocalActionCapability
+from src.mail_agent.shared.models import LocalActionCapability
 from src.mail_agent.shared.exceptions import ServiceException
+from src.mail_agent.shared.settings import settings
 
 
 class ActionExecutionCapabilitySelector:
@@ -17,15 +18,15 @@ class ActionExecutionCapabilitySelector:
         self.available_capabilities = self.input.available_capabilities
 
         self.agent = Agent(
-            'openai:gpt-5.1',
+            f'openai:{settings.DEFAULT_MODEL}',
             system_prompt=SYSTEM_PROMPT,
             instructions=ACTION_EXECUTION_NODE_SELECTOR_INSTRUCTION,
             output_type=ActionExecutionCapabilitySelectorOutput,
         )
 
-    def select_action_execution_capability(self) -> LocalActionCapability:
+    async def select_action_execution_capability(self) -> LocalActionCapability:
         # TODO: add capabilities injection to instruction via @agent.instructions
-        result = self.agent.run_sync(
+        result = await self.agent.run(
             f"Execution plan step data: {self.execution_plan_step_data};\r\n"
             f"List of available capabilities: {self.available_capabilities}",
         )
