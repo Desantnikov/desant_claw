@@ -1,11 +1,12 @@
 from langgraph.graph import StateGraph, START, END
 
+from local_action_subgraph import local_action_subgraph
+from reply_subgraph import reply_subgraph
 from src.mail_agent.states.top_level_state import TopLevelState
 
 from .routing import TopLevelRouter
 from .models import NodesEnum
 from .nodes import debug_print, shutdown, ingest_email, analyze_input_security, build_execution_plan, dispatch_execution_plan_step
-
 
 graph_builder = StateGraph(TopLevelState)
 
@@ -14,7 +15,9 @@ graph_builder.add_node(NodesEnum.INGEST_EMAIL, ingest_email)
 graph_builder.add_node(NodesEnum.ANALYZE_INPUT_SECURITY, analyze_input_security)
 graph_builder.add_node(NodesEnum.BUILD_EXECUTION_PLAN, build_execution_plan)
 graph_builder.add_node(NodesEnum.DISPATCH_EXECUTION_PLAN_STEP, dispatch_execution_plan_step)
-
+# add subgraphs as nodes so they share same checkpointer for HITL
+graph_builder.add_node(NodesEnum.LOCAL_ACTION_SUBGRAPH, local_action_subgraph)
+graph_builder.add_node(NodesEnum.REPLY_SUBGRAPH, reply_subgraph)
 
 graph_builder.add_node(NodesEnum.SHUTDOWN, shutdown)
 graph_builder.add_node('debug_print', debug_print)
@@ -37,6 +40,7 @@ graph_builder.add_conditional_edges(
     TopLevelRouter.after_dispatch_execution_plan,  # else SHUTDOWN
 )
 
-
-graph = graph_builder.compile()
+# TODO: move compilation to GraphRuntime
+async def compile_graph(checkpointer):
+    return graph_builder.compile(checkpointer=checkpointer)
 

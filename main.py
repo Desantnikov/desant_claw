@@ -1,8 +1,15 @@
-from src.mail_agent.graph.top_level.graph_builder import graph
+import asyncio
+
+from langgraph.types import Command
+
+from src.mail_agent.shared.settings import settings
+from src.mail_agent.runtime.graph_runtime import GraphRuntime
+from src.mail_agent.runtime.event_factory import EventFactory
+
 from src.mail_agent.services.fetch_email_service import FetchEmailService
 
 if __name__ == "__main__":
-    mail_service = FetchEmailService()
+    # mail_service = FetchEmailService()
 
     # latest_mail = mail_service.get_latest_email()
     # latest_mail = {'id': '19d2a8aa0bbf3f92', 'threadId': '19d2a8aa0bbf3f92', 'snippet': 'Thanks for ordering, Anton! Here&#39;s your receipt: Tesco Hypermarket Kamenné námestie March 26, 2026, 15:25 Order ID: 69c53682c5563733a199faa1 Total EUR \u200e49.77 \u200e48.13 Discount \u200e1.64 Your order', 'body': '', 'subject': '=?UTF-8?Q?Your_order=E2=80=99s_delivered:_Tesco_Hype?=\r\n =?UTF-8?Q?rmarket_Kamenn=C3=A9_n=C3=A1mestie_26.03.2026?=', 'sender': 'Wolt <info@wolt.com>'}
@@ -19,8 +26,16 @@ if __name__ == "__main__":
                    'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
                    'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
 
+    approve_latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
+                   'snippet': 'cd6cfe44-fb65-40d3-9534-33ab44c827b1',
+                   'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'HITL_RESPONSE',
+                   'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
 
-    # graph.get_graph().draw_mermaid_png(output_file_path='./diagram.png')
-    state = graph.invoke({"email_raw_data": latest_mail})
 
-    print('aaaa')
+    event = EventFactory.from_email(raw_email_data=latest_mail)
+    # event = EventFactory.from_email(raw_email_data=approve_latest_mail)
+    graph_runtime = GraphRuntime()
+    event.decisions = [{"type": "approve"}]
+    result = asyncio.run(graph_runtime.process_event(event=event))
+
+    print(f'Result: {result}')
