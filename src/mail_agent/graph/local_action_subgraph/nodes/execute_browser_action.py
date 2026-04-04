@@ -5,7 +5,7 @@ from src.mail_agent.services.local_action_executors.browser_action_executor impo
 from src.mail_agent.services.local_action_executors.contracts import LocalActionExecutorInput
 
 
-def execute_browser_action(state: LocalActionSubState):
+async def execute_browser_action(state: LocalActionSubState):
     step_summary = state.execution_plan_step_data.summary
     step_reason = state.execution_plan_step_data.reason
     action_spec = state.execution_plan_step_data.action_spec
@@ -16,7 +16,7 @@ def execute_browser_action(state: LocalActionSubState):
         action_spec=action_spec,
     )
 
-    result = asyncio.run(BrowserActionExecutor.execute_async(input_=executor_service_input))
+    result = await BrowserActionExecutor.execute_async(input_=executor_service_input)
     artifacts = result.artifacts
 
     return {"artifacts": artifacts}

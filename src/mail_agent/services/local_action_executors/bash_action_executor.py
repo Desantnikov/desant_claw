@@ -4,6 +4,8 @@ from langchain_community.tools.shell import ShellTool
 from langchain.agents.middleware import dynamic_prompt, ModelRequest
 from langchain.messages import HumanMessage
 
+from src.mail_agent.shared.settings import settings
+
 from .contracts import LocalActionExecutorInput, LocalActionExecutorOutput
 
 
@@ -30,7 +32,7 @@ class BashActionExecutor:
     """
     @staticmethod
     def execute(input_: LocalActionExecutorInput) -> LocalActionExecutorOutput:
-        model = ChatOpenAI(model="gpt-5.1", temperature=0)
+        model = ChatOpenAI(model=settings.DEFAULT_MODEL, temperature=0)
         tools = [ShellTool()]
 
         agent_chain = create_agent(
