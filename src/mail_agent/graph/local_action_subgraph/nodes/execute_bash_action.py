@@ -3,7 +3,7 @@ from src.mail_agent.services.local_action_executors.bash_action_executor import 
 from src.mail_agent.services.local_action_executors.contracts import LocalActionExecutorInput
 
 
-def execute_bash_action(state: LocalActionSubState):
+async def execute_bash_action(state: LocalActionSubState):
     step_summary = state.execution_plan_step_data.summary
     step_reason = state.execution_plan_step_data.reason
     action_spec = state.execution_plan_step_data.action_spec

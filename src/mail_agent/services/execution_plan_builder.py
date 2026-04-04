@@ -3,6 +3,7 @@ from pydantic_ai import Agent
 from src.mail_agent.services.contracts import ExecutionPlanBuilderOutput
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, EXECUTION_PLAN_BUILDER_INSTRUCTION
 from src.mail_agent.shared.models import ExecutionPlan, ExecutionPlanStep
+from src.mail_agent.shared.settings import settings
 from .contracts import ExecutionPlanBuilderInput
 
 
@@ -12,14 +13,14 @@ class ExecutionPlanBuilder:
         self.email_data = self.input.email_data
 
         self.agent = Agent(
-            'openai:gpt-5.1',
+            f'openai:{settings.DEFAULT_MODEL}',
             system_prompt=SYSTEM_PROMPT,
             instructions=EXECUTION_PLAN_BUILDER_INSTRUCTION,
             output_type=ExecutionPlanBuilderOutput,
         )
 
-    def build_execution_plan(self) -> ExecutionPlan:
-        result = self.agent.run_sync(self.email_data.snippet)
+    async def build_execution_plan(self) -> ExecutionPlan:
+        result = await self.agent.run(self.email_data.snippet)
 
         steps = []
         for index, suggested_step in enumerate(result.output.suggested_steps):
