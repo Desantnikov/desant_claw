@@ -1,3 +1,4 @@
+from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import StateGraph, START, END
 
 from src.mail_agent.states.local_actions_substate import LocalActionSubState
@@ -23,6 +24,5 @@ local_action_subgraph_builder.add_conditional_edges(
     LocalActionSubgraphRouter.after_select_action_execution_capability,
 )
 
-
-
 local_action_subgraph = local_action_subgraph_builder.compile()
+
