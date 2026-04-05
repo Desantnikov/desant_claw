@@ -1,21 +1,10 @@
-"""
-Checkpointer factory for LangGraph conversation persistence.
-
-Provides two modes:
-- MemorySaver: For development/testing (no persistence across restarts)
-- AsyncPostgresSaver: For production (full persistence via PostgreSQL)
-
-The AsyncPostgresSaver uses psycopg v3 async connection pool for efficient
-concurrent access to checkpoint tables in a dedicated schema (default: ai_chat).
-"""
-
 import logging
 from typing import TYPE_CHECKING
 
 from langgraph.checkpoint.base import BaseCheckpointSaver
 from langgraph.checkpoint.memory import MemorySaver
 
-from src.mail_agent.shared.settings import settings
+from settings import settings
 
 
 if TYPE_CHECKING:
@@ -30,6 +19,7 @@ _async_pool: "AsyncConnectionPool | None" = None
 _async_checkpointer: "AsyncPostgresSaver | None" = None
 
 
+# TODO: move to /src/storage
 async def create_async_checkpointer() -> "AsyncPostgresSaver":
     """
     Create AsyncPostgresSaver with a psycopg v3 async connection pool.

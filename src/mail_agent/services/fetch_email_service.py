@@ -9,11 +9,27 @@ class FetchEmailService:
         self.get_message = tools["get_gmail_message"]
 
     def get_latest_email(self):
-        # Search newest email
-        result = self.search.invoke({"query": "in:inbox", "max_results": 1})
+        # Search for the newest email in inbox
+        search_result = self.search.invoke({"query": "in:inbox", "max_results": 1})
 
-        if not result:
+        if not search_result:
             return None
 
-        message_id = result[0]["id"]
+        message_id = search_result[0]["id"]
         return self.get_message.invoke({"message_id": message_id})
+
+    async def get_all_emails(self, query: str = "in:inbox", max_results: int = 1000) -> list[dict]:
+        # Search for email message ids
+        search_result = await self.search.ainvoke({"query": query, "max_results": max_results})
+
+        if not search_result:
+            return []
+
+        emails: list[dict] = []
+
+        for email_info in search_result:
+            message_id = email_info["id"]
+            full_message = await self.get_message.ainvoke({"message_id": message_id})
+            emails.append(full_message)
+
+        return emails

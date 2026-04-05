@@ -1,9 +1,9 @@
-from pydantic_ai import Agent
+from pydantic_ai import Agent  # using pydantic-ai-slim
 
 from src.mail_agent.services.contracts import ExecutionPlanBuilderOutput
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, EXECUTION_PLAN_BUILDER_INSTRUCTION
 from src.mail_agent.shared.models import ExecutionPlan, ExecutionPlanStep
-from src.mail_agent.shared.settings import settings
+from settings import settings
 from .contracts import ExecutionPlanBuilderInput
 
 

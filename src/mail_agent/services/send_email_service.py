@@ -4,7 +4,7 @@ from langchain_google_community import GmailToolkit
 from langchain.agents.middleware import dynamic_prompt, ModelRequest
 from langchain.messages import HumanMessage
 
-from src.mail_agent.shared.settings import settings
+from settings import settings
 from .contracts import SendEmailServiceInput, SendEmailServiceOutput
 
 
