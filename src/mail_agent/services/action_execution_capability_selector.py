@@ -4,7 +4,7 @@ from src.mail_agent.services.contracts import ActionExecutionCapabilitySelectorI
 from src.mail_agent.shared.prompts import SYSTEM_PROMPT, ACTION_EXECUTION_NODE_SELECTOR_INSTRUCTION
 from src.mail_agent.shared.models import LocalActionCapability
 from src.mail_agent.shared.exceptions import ServiceException
-from src.mail_agent.shared.settings import settings
+from settings import settings
 
 
 class ActionExecutionCapabilitySelector:

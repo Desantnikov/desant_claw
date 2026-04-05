@@ -1,18 +1,16 @@
-import re
 import uuid
 
+from src import utils
 from .models import Event
 from .enums import EventType
 
 
 # TODO: split into separate classes for each input type
 class EventFactory:
-    EMAIL_REGEXP = r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b'
-
     @classmethod
     def from_email(cls, raw_email_data: dict) -> Event:
         content = cls._parse_content(raw_email_data=raw_email_data)
-        sender_email = cls._parse_email(sender_string=raw_email_data["sender"])
+        sender_email = utils.parse_email(input_string=raw_email_data["sender"])
         event_type = cls._identify_event_type(raw_email_data=raw_email_data)
 
         if event_type == EventType.HITL_RESPONSE:
@@ -30,16 +28,6 @@ class EventFactory:
         )
 
     @classmethod
-    def _parse_email(cls, sender_string: str) -> str:
-        parsed_sender_email = re.search(cls.EMAIL_REGEXP, sender_string)
-        parsed_sender_email = parsed_sender_email.group(0) if parsed_sender_email else None
-
-        if parsed_sender_email is None:
-            raise Exception("Invalid sender email")
-
-        return parsed_sender_email
-
-    @classmethod
     def _identify_event_type(cls, raw_email_data: dict) -> EventType:
         if 'HITL_RESPONSE' in raw_email_data['subject']:
             return EventType.HITL_RESPONSE
@@ -51,7 +39,7 @@ class EventFactory:
             "snippet": raw_email_data["snippet"],
             "body": raw_email_data["body"],
             "subject": raw_email_data["subject"],
-            "sender": cls._parse_email(sender_string=raw_email_data["sender"]),
+            "sender": utils.parse_email(input_string=raw_email_data["sender"]),
         }
 
     @classmethod
