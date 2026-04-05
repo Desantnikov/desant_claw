@@ -1,12 +1,12 @@
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
-from langchain.agents.middleware import dynamic_prompt, ModelRequest, HumanInTheLoopMiddleware, InterruptOnConfig
+from langchain.agents.middleware import dynamic_prompt, ModelRequest, HumanInTheLoopMiddleware
 from langchain.messages import HumanMessage
 from playwright.async_api import async_playwright
 
 from .contracts import LocalActionExecutorInput, LocalActionExecutorOutput
-from src.mail_agent.shared.settings import settings
+from settings import settings
 
 @dynamic_prompt
 def build_step_prompt(request: ModelRequest) -> str:

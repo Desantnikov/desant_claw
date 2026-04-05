@@ -1,5 +1,5 @@
 from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -7,12 +7,20 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = Field()
     DEFAULT_MODEL: str = Field()
 
+    # POSTGRES
     POSTGRES_DB: str = Field()
     POSTGRES_USER: str = Field()
     POSTGRES_PASSWORD: str = Field()
     DATABASE_URL: str = Field()
 
-    # model_config = SettingsConfigDict(env_prefix='my_prefix_')
+    # QDRANT
+    QDRANT_HOST: str = Field()
+    QDRANT_PORT: int = Field()
+
+    # to make it use psycopg3
+    @property
+    def sqlalchemy_database_url(self) -> str:
+        return self.DATABASE_URL.replace("postgresql://","postgresql+psycopg://")
 
 
 settings = Settings()

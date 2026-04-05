@@ -1,20 +1,16 @@
-import re
-
+from src import utils
+from src.settings import settings
 from src.mail_agent.shared.enums import SenderTypeEnum
 from src.mail_agent.states.top_level_state import TopLevelState
 from src.mail_agent.shared.models import EmailData
-from src.mail_agent.shared.settings import settings
-
-
-EMAIL_REGEXP = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
 
 
 async def ingest_email(state: TopLevelState):
-    mails_found = re.findall(EMAIL_REGEXP, state.email_raw_data['sender'])
+    sender_email = utils.parse_email(input_string=state.email_raw_data['sender'])
     snippet_text = state.email_raw_data['snippet']  # TODO: decode text
 
     email_data = EmailData(
-        sender_address=mails_found[0],
+        sender_address=sender_email,
         snippet=snippet_text,
     )
 
