@@ -1,6 +1,13 @@
 curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
 
+uv run alembic revision --autogenerate -m "name"
+uv run alembic revision -m "name"
+uv run alembic upgrade head
+uv run alembic downgrade -1
+uv run alembic downgrade 8ac14e223d1e
+qdrant web ui: http://localhost:6333/dashboard#
 
+Using pydantic-ai-slim because pydantic-ai needs transformers >= 5, while flagembeddings require transformers < 5
 
 1. ingest_email (adds normalized email data to state)
 2. analyze_input_security (adds "security_score: secure/suspicious/malicious")
