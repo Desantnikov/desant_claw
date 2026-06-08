@@ -3,6 +3,19 @@
 credentials.json
 token.json
 .venv
+
+# Playwright / browser automation artifacts
+playwright-report/
+test-results/
+.playwright/
+videos/
+screenshots/
+
+# Local data / scratch
+*.sqlite3
+*.db
+local/
+tmp/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

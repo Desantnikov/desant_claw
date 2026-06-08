@@ -9,25 +9,18 @@ if __name__ == "__main__":
     mail_service = FetchEmailService()
 
     # latest_mail = mail_service.get_latest_email()
-    # latest_mail = {'id': '19d2a8aa0bbf3f92', 'threadId': '19d2a8aa0bbf3f92', 'snippet': 'Thanks for ordering, Anton! Here&#39;s your receipt: Tesco Hypermarket Kamenné námestie March 26, 2026, 15:25 Order ID: 69c53682c5563733a199faa1 Total EUR \u200e49.77 \u200e48.13 Discount \u200e1.64 Your order', 'body': '', 'subject': '=?UTF-8?Q?Your_order=E2=80=99s_delivered:_Tesco_Hype?=\r\n =?UTF-8?Q?rmarket_Kamenn=C3=A9_n=C3=A1mestie_26.03.2026?=', 'sender': 'Wolt <info@wolt.com>'}
-    # latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
-    #  'snippet': 'найди мой последний markdown-файл, вытащи из него задачи и создай новый summary-файл',
-    #  'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
-    #  'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
-    # latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
-    #                'snippet': 'Найди в интернете данные об украине, сохрани их в файл, и отправь этот файл мне по почте',
-    #                'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
-    #                'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
-    latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
-                   'snippet': 'Найди инфу про украину и отправь мне ву письме',
+
+    # Synthetic sample message used for local runs. Use placeholder data only.
+    latest_mail = {'id': 'demo-0001', 'threadId': 'demo-thread-0001',
+                   'snippet': 'Read the file notes.txt and send it back to me',
                    'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'Instructions',
-                   'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
+                   'sender': 'Demo User <demo@example.com>'}
 
-    approve_latest_mail = {'id': '19d2bac180afe79c', 'threadId': '19d2babc9dc937b9',
-                   'snippet': '484937f6-091b-4f12-8d3e-1fd77fa465da',
+    # Sample human-in-the-loop response message. The snippet carries the thread id to resume.
+    approve_latest_mail = {'id': 'demo-0001', 'threadId': 'demo-thread-0001',
+                   'snippet': '00000000-0000-0000-0000-000000000000',
                    'body': 'Read file "notes.txt" and send it back to me\r\n', 'subject': 'HITL_RESPONSE',
-                   'sender': '=?UTF-8?B?0JjQvNGP?= <desiatnikovwork@gmail.com>'}
-
+                   'sender': 'Demo User <demo@example.com>'}
 
     event = EventFactory.from_email(raw_email_data=latest_mail)
     # event = EventFactory.from_email(raw_email_data=approve_latest_mail)
