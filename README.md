@@ -17,12 +17,7 @@ others are stubs — the sections below try to be honest about which is which.
 
 ## Why I built it
 
-Handling email by hand usually means the same chain of steps over and over: figure out
-what the message is, look up whatever context you need, decide what to do, do it, and
-only then reply — ideally with a person signing off before anything irreversible
-happens. I wanted to see how much of that chain an LLM backend could take on without
-just trusting whatever the model spits out. So the model proposes a plan, the system
-stays in charge of running it, and the risky steps still need a human.
+I just wanted to control my laptop remotely via email and llm :)
 
 ## What's in here
 
